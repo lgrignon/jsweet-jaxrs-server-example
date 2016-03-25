@@ -1,0 +1,7 @@
+compiler.bundle=true
+compiler.bundlesDirectory=src/main/webapp/js/app/bundles
+compiler.debugMode=java
+compiler.javascriptFolder=src/main/webapp/js/app
+compiler.moduleKind=commonjs
+compiler.typescriptFolder=.generated
+eclipse.preferences.version=1

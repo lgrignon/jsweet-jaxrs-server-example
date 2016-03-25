@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Phyt's</title>
+
+<!-- Bootstrap -->
+<link href="bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="css/dataTables.bootstrap.css" rel="stylesheet"> -->
+<!-- <link href="css/dataTables.responsive.css" rel="stylesheet">  -->
+<link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/select/1.1.2/css/select.bootstrap.min.css" rel="stylesheet">
+
+<!-- <script src="js/lib/jquery-1.12.0.min.js"></script> -->
+<script src="js/lib/jquery-2.2.0.min.js"></script>
+<script src="js/lib/underscore-min.js"></script>
+<script src="bootstrap-3.3.6/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/bundle.js" charset="UTF-8"></script>
+
+<script src="js/lib/bootbox.min.js"></script>
+
+<script src="js/lib/knockout-3.4.0.js"></script>
+<script src="js/lib/knockout.punches.min.js"></script>
+
+<script src="js/lib/jquery.inputmask.bundle.js"></script>
+
+<!-- <script
+	src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script> -->
+
+<!-- jQuery DataTables http://datatables.net -->
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+<!-- <script src="js/lib/jquery.dataTables.min.js"></script>  -->
+<!-- <script src="js/lib/dataTables.buttons.min.js"></script>-->
+<!-- <script src="js/lib/dataTables.select.min.js"></script> -->
+<script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+
+
+<!-- https://editor.datatables.net/examples/inline-editing/simple -->
+<!-- <script src="js/lib/dataTables.editor.min.js"></script> -->
+
+<!-- <script src="js/lib/knockout-jqueryui.js"></script> -->
+
+</head>
+<body>
+
+	<nav id="navbar" class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"> {{'APP_NAME' | translate}} </a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li data-bind="css: { active: fr.jerodia.client.App.isActivePage('cares') }"><a data-bind="click: fr.jerodia.client.App.setActivePage.bind($data,event,'cares')" href="#">Soins <span
+							class="sr-only">(current)</span></a></li>
+					<li data-bind="css: { active: fr.jerodia.client.App.isActivePage('beauticians') }"><a data-bind="click: fr.jerodia.client.App.setActivePage.bind($data,event,'beauticians')" href="#">Esthéticiennes
+							<span class="badge" data-bind="text: newBeauticianCount">42</span>
+					</a></li>
+					<li data-bind="css: { active: fr.jerodia.client.App.isActivePage('institutes') }"><a data-bind="click: fr.jerodia.client.App.setActivePage.bind($data,event,'institutes')" href="#">Instituts
+							<span class="badge" data-bind="text: newInstituteCount">4</span>
+					</a></li>
+					<li data-bind="css: { active: fr.jerodia.client.App.isActivePage('reservations') }"><a data-bind="click: fr.jerodia.client.App.setActivePage.bind($data,event,'reservations')" href="#">Reservations</a></li>
+					<li data-bind="css: { active: fr.jerodia.client.App.isActivePage('stats') }"><a data-bind="click: fr.jerodia.client.App.setActivePage.bind($data,event,'stats')" href="#">Statistiques</a></li>
+					<li data-bind="css: { active: fr.jerodia.client.App.isActivePage('configuration') }"><a data-bind="click: fr.jerodia.client.App.setActivePage.bind($data,event,'configuration')" href="#">Configuration</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Déconnexion</a></li>
+							<li><a href="#">Utilisateurs</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	<div class="container">
+
+		<!-- ######################################################################################### -->
+
+		<section id="beauticians" data-bind="visible: fr.jerodia.client.App.isActivePage('beauticians')">
+			Estheticiennes
+
+			<table id="beauticiansDT" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Statut</th>
+						<th>Titre</th>
+						<th>Prénom</th>
+						<th>Nom</th>
+						<th>Email</th>
+						<th>Adresse</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: datas">
+					<tr>
+						<td data-bind="text: $data.status"></td>
+						<td data-bind="text: $data.title"></td>
+						<td data-bind="text: $data.firstName"></td>
+						<td data-bind="text: $data.lastName"></td>
+						<td data-bind="text: $data.email"></td>
+						<td data-bind="text: $data.postalAddresses[0]"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<button data-action="createData" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalBeautician">Créer</button>
+			<button data-action="modifyData" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalBeautician">Modifier</button>
+
+			<div class="modal fade" id="modalBeautician" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="exampleModalLabel">Esthéticienne</h4>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div data-bind="with: selectedData">
+									<div class="form-group">
+										<label for="name" class="control-label">Statut:</label> <input type="text" class="form-control" id="name" data-bind="textInput: status">
+									</div>
+									<div class="row">
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label for="name" class="control-label">Titre:</label> <input type="text" class="form-control" id="name" data-bind="textInput: title">
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label for="name" class="control-label">Prénom:</label> <input type="text" class="form-control" id="name" data-bind="textInput: firstName">
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label for="name" class="control-label">Nom:</label> <input type="text" class="form-control" id="name" data-bind="textInput: lastName">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="name" class="control-label">Email:</label> <input type="text" class="form-control" id="name" data-bind="textInput: email">
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">Addresse</h3>
+									</div>
+									<div class="panel-body" data-bind="with: koCurrentAddress">
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label for="postalAddress.streetNumber" class="control-label">N°:</label> <input type="text" class="form-control" id="postalAddress.streetNumber" data-bind="textInput: streetNumber">
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label for="postalAddress.street" class="control-label">Rue:</label> <input type="text" class="form-control" id="postalAddress.street" data-bind="textInput: street">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label for="postalAddress.postalCode" class="control-label">Code postal:</label> <input type="text" class="form-control" id="postalAddress.postalCode" data-bind="textInput: postalCode">
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label for="postalAddress.city" class="control-label">Ville:</label> <input type="text" class="form-control" id="postalAddress.city" data-bind="textInput: city">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label for="postalAddress.stateOrProvince" class="control-label">Département/province/état:</label> <input type="text" class="form-control" id="postalAddress.stateOrProvince"
+														data-bind="textInput: stateOrProvince">
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label for="postalAddress.country" class="control-label">Pays:</label> <input type="text" class="form-control" id="postalAddress.country" data-bind="textInput: country">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: pushData">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</section>
+
+		<!-- ######################################################################################### -->
+
+		<section id="institutes" data-bind="visible: fr.jerodia.client.App.isActivePage('institutes')">Instituts (TODO)</section>
+
+		<!-- ######################################################################################### -->
+
+		<section id="cares" data-bind="visible: fr.jerodia.client.App.isActivePage('cares')">
+
+			<label class="radio-inline"><input type="radio" name="locationGroup" value="HOME" data-bind="checked: koLocation">A domicile</label> <label class="radio-inline"><input type="radio"
+				name="locationGroup" value="INSTITUTE" data-bind="checked: koLocation">En institut</label>
+
+			<table id="caresDT" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Description</th>
+						<th>Prix</th>
+						<th>Durée</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: datas">
+					<tr>
+						<td data-bind="text: $data.name"></td>
+						<td data-bind="text: $data.description"></td>
+						<td data-bind="text: $data.price"></td>
+						<td data-bind="text: $data.duration"></td>
+					</tr>
+				</tbody>
+				<!-- 
+ 				<tbody>
+				<tr>
+					<td>a</td>
+					<td>b</td>
+					<td>c</td>
+					<td>c</td>
+					<td>c</td>
+				</tr>
+				<tr>
+					<td>d</td>
+					<td>e</td>
+					<td>f</td>
+					<td>c</td>
+					<td>c</td>
+				</tr>
+ 			</tbody>
+			-->
+			</table>
+
+			<button data-action="createData" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCare">Créer</button>
+
+			<button data-action="modifyData" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalCare">Modifier</button>
+
+			<button data-action="deleteData" type="button" class="btn btn-secondary">Supprimer (?)</button>
+
+			<div class="modal fade" id="modalCare" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="exampleModalLabel">Care</h4>
+						</div>
+						<div class="modal-body" data-bind="with: selectedData">
+							<form>
+								<div class="form-group">
+									<label for="name" class="control-label">Nom:</label> <input type="text" class="form-control" id="name" data-bind="textInput: name">
+								</div>
+								<div class="form-group">
+									<label for="description" class="control-label">Description:</label>
+									<textarea class="form-control" id="description" data-bind="textInput: description"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="price" class="control-label">Price:</label>
+									<div class="input-group">
+										<span class="input-group-addon">€</span> <input class="form-control currency" id="price" data-bind="textInput: price" data-inputmask="'mask': '9{+}[.99]'" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="duration-hours" class="control-label">Durée:</label> <input type="text" class="form-control" id="duration-hours" data-bind="textInput: duration" data-inputmask="'mask': '9:99'"
+										placeholder="h:mm">
+								</div>
+							</form>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: pushData">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</section>
+
+		<!-- ######################################################################################### -->
+
+		<section id="reservations" data-bind="visible: fr.jerodia.client.App.isActivePage('reservations')">
+
+			<div class="panel panel-default">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Heure</th>
+							<th>Client</th>
+							<th>Esthéticienne</th>
+							<th>Institut</th>
+							<th>Soins</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: cares">
+						<tr>
+							<td data-bind="text: name"></td>
+							<td data-bind="text: name"></td>
+							<td data-bind="text: name"></td>
+							<td data-bind="text: name"></td>
+							<td data-bind="text: name"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<button type="button" class="btn btn-primary">Rechercher</button>
+
+				<button type="button" class="btn btn-secondary">Modification</button>
+
+				<button type="button" class="btn btn-secondary">Annulation</button>
+
+				<button type="button" class="btn btn-secondary">Remboursement</button>
+			</div>
+
+		</section>
+
+		<!-- ######################################################################################### -->
+
+		<section id="stats" data-bind="visible: fr.jerodia.client.App.isActivePage('stats')">
+
+			<h3>Statistiques mensuelles</h3>
+
+			<table class="table">
+
+				<thead>
+					<tr>
+						<th></th>
+						<th>m-5</th>
+						<th>m-4</th>
+						<th>m-3</th>
+						<th>m-2</th>
+						<th>m-1</th>
+						<th>m</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Nombre de commandes</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>Total CA</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>Total paiements esthéticiennes</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>Total marge distributeur</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<h3>Top esthéticiennes</h3>
+			<h3>Top instituts</h3>
+			<h3>Top soins</h3>
+
+			<h3>Top esthéticiennes en non-recommandes (nombre total de commandes / nombre total de recommandes)</h3>
+
+			<button type="button" class="btn btn-primary">Exporter le fichier client en CSV</button>
+		</section>
+
+		<!-- ######################################################################################### -->
+
+		<section id="configuration" data-bind="visible: fr.jerodia.client.App.isActivePage('configuration')">
+
+			<div data-bind="with: configuration">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Rémunération des esthéticiennes</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="firstOrderBeauticianRatio">Première commande</label>
+									<div class="input-group">
+										<input id="firstOrderBeauticianRatio" type="text" class="form-control" value="10" data-bind="textInput: firstOrderBeauticianRatio"> <span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="beauticianRatio">Commandes suivantes</label>
+									<div class="input-group">
+										<input id="beauticianRatio" type="text" class="form-control" value="3" data-bind="textInput: beauticianRatio"> <span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Pénalités d'annulation esthéticiennes</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="beauticianCancelPenaltyValue">Valeur</label>
+									<div class="input-group">
+										<input id="beauticianCancelPenaltyValue" type="text" class="form-control" value="50" data-bind="textInput: beauticianCancelPenaltyValue"> <span class="input-group-addon">€</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="beauticianCancelCountBeforePenalty">Nombres d'annulations avant pénalité</label>
+									<div class="input-group">
+										<input id="beauticianCancelCountBeforePenalty" type="text" class="form-control" value="3" data-bind="textInput: beauticianCancelCountBeforePenalty">
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="beauticianCancelCountBeforePenaltyDurationInMonths">Sur une durée de</label>
+									<div class="input-group">
+										<input id="beauticianCancelCountBeforePenaltyDurationInMonths" type="text" class="form-control" value="1" data-bind="textInput: beauticianCancelCountBeforePenaltyDurationInMonths"> <span
+											class="input-group-addon">mois</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Conditions d'annulation clientes</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="homeCustomerCancelWithRefundDeadlineInHours">Commandes à domicile remboursable avant la limite de</label>
+									<div class="input-group">
+										<input id="homeCustomerCancelWithRefundDeadlineInHours" type="text" class="form-control" value="8" data-bind="textInput: homeCustomerCancelWithRefundDeadlineInHours"> <span
+											class="input-group-addon">heures</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="instituteCustomerCancelWithRefundDeadlineInHours">Commandes en institut remboursable avant la limite de</label>
+									<div class="input-group">
+										<input id="instituteCustomerCancelWithRefundDeadlineInHours" type="text" class="form-control" value="4" data-bind="textInput: instituteCustomerCancelWithRefundDeadlineInHours"> <span
+											class="input-group-addon">heures</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Panier</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="homeMinimumShoppingCartPrice">Montant minimal pour une commande à domicile (vérifier si par esthéticienne)</label>
+							<div class="input-group">
+								<input id="homeMinimumShoppingCartPrice" type="text" class="form-control" value="50" data-bind="textInput: homeMinimumShoppingCartPrice"> <span class="input-group-addon">€</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">SMS de rappel</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="notificationBeforeCareInHours">Notification</label>
+							<div class="input-group">
+								<input id="notificationBeforeCareInHours" type="text" class="form-control" value="2" data-bind="textInput: notificationBeforeCareInHours"> <span class="input-group-addon">heure(s)
+									avant le RDV</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="notificationMessage">Notification</label>
+							<textarea id="notificationMessage" class="form-control" rows="5" data-bind="textInput: notificationMessage">Rappel de votre RDV avec %NAME à %H le %D au %ADDRESS.</textarea>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<button type="button" class="btn btn-default" data-bind="click: resetConfiguration">Réinitialiser aux valeurs par defaut</button>
+			<button type="button" class="btn btn-primary" data-bind="click: saveConfiguration">Sauvegarder</button>
+		</section>
+
+	</div>
+	<!-- <script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/Dates.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/LogLevel.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/Logger.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/Server.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/Messages.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/model/UserStatus.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/candies/phyts-client-commons-0.0.1-SNAPSHOT/fr/jerodia/client/model/ServiceLocation.js" charset="UTF-8"></script>  -->
+	<script type="text/javascript" src="js/app/fr/jerodia/client/AbstractTableController.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/app/fr/jerodia/client/BeauticianController.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/app/fr/jerodia/client/CareController.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/app/fr/jerodia/client/ConfigurationController.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/app/fr/jerodia/client/App.js" charset="UTF-8"></script>
+
+</body>
+</html>
