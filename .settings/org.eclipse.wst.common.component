@@ -5,6 +5,9 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <dependent-module archiveName="jsweet-transpiler-1.1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jsweet/jsweet">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/ionic-exercise-server/target/classes"/>
         <property name="component.exclusion.patterns" value="WEB-INF/web.xml"/>
         <property name="context-root" value="ionic-exercise-server"/>

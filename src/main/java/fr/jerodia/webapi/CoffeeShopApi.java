@@ -3,12 +3,12 @@ package fr.jerodia.webapi;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,6 +23,7 @@ public class CoffeeShopApi {
 	private static final Logger logger = Logger.getLogger(CoffeeShopApi.class);
 
 	private final static Map<String, CoffeeShopDto> coffeeShopsById = new HashMap<>();
+	private final static Map<String, Integer> coffeeShopsRates = new HashMap<>();
 
 	private static int lastId = 0;
 
@@ -68,20 +69,51 @@ public class CoffeeShopApi {
 		return coffeeShopsById.values().toArray(new CoffeeShopDto[0]);
 	}
 
+	@GET
+	@Path("getDetails")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public CoffeeShopDetailsDto getDetails(@QueryParam("id") String id) {
+		logger.info("/coffeeshop/getDetails - id=" + id);
+
+		CoffeeShopDto coffeeShopDto = coffeeShopsById.get(id);
+		Integer coffeeRate = coffeeShopsRates.get(id);
+
+		return new CoffeeShopDetailsDto() {
+			{
+				id = coffeeShopDto.id;
+				name = coffeeShopDto.name;
+				address = coffeeShopDto.address;
+				rate = coffeeRate == null ? 0 : coffeeRate;
+			}
+		};
+	}
+
 	@POST
 	@Path("add")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response saveDistributorConfiguration(AddCoffeeShopParameters parameters) {
+	public Response add(AddCoffeeShopParameters parameters) {
 		logger.info("/coffeeshop/add");
 
-//		addCoffeeShop(new CoffeeShopDto() {
-//			{
-//				name = parameters.name;
-//				address = parameters.address;
-//			}
-//		});
-//
+		addCoffeeShop(new CoffeeShopDto() {
+			{
+				name = parameters.name;
+				address = parameters.address;
+			}
+		});
+		return Response.ok().build();
+	}
+
+	@POST
+	@Path("rate")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response rate(RateCoffeeShopParameters parameters) {
+		logger.info("/coffeeshop/rate");
+
+		coffeeShopsRates.put(parameters.id, parameters.rate);
+
 		return Response.ok().build();
 	}
 }
