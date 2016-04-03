@@ -9,3 +9,5 @@ buildNumber.properties
 .mvn/timing.properties
 src/main/webapp/js/candies
 src/main/webapp/js/app
+.jsweet
+.generated

@@ -11,6 +11,6 @@
     </message-bundle>
   </application>
   <factory>
-    <exception-handler-factory>fr.jerodia.configuration.TheExceptionHandlerFactory</exception-handler-factory>
+    <exception-handler-factory>org.jsweet.ionicexercise.configuration.TheExceptionHandlerFactory</exception-handler-factory>
   </factory>
 </faces-config>
