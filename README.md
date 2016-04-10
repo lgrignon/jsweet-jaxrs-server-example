@@ -1,9 +1,8 @@
 # JSweet + JAX-RS / Jersey + Knockout JS example: rate your coffee shops [SERVER]
 
 This project holds:
-1) a server for the (Ionic client exercise)[https://github.com/lgrignon/ionic-exercise] using a JAX-RS (Jersey) web api
-2) a web interface written in Knockout
-
+1) a server for the [JSweet Ionic client example](https://github.com/lgrignon/jsweet-cordova-ionic-example) using a JAX-RS (Jersey) web api
+2) an example of a web interface written in JSweet + Knockout
 
 ## Pre-requisits
 
