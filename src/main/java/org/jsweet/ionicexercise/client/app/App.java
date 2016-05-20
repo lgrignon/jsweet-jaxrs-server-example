@@ -31,8 +31,8 @@ public class App {
 	public static void main(String[] args) {
 		logger.info("starting app");
 
-//		Server.instance().setWebRoot("http://localhost:8080/ionic-exercise-server/api");
-		Server.instance().setWebRoot("http://jsweet.org/ionic-exercise-server/api");
+		Server.instance().setWebRoot("http://localhost:8080/ionic-exercise-server/api");
+//		Server.instance().setWebRoot("http://jsweet.org/ionic-exercise-server/api");
 		Server.instance().addPersistentHeader("Content-Type", "application/json");
 		
 		// TODO : set ping service path to enable connectivity listening

@@ -3,6 +3,7 @@ package org.jsweet.ionicexercise.webapi;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,8 +18,6 @@ import org.jsweet.ionicexercise.client.model.AddCoffeeShopParameters;
 import org.jsweet.ionicexercise.client.model.CoffeeShopDetailsDto;
 import org.jsweet.ionicexercise.client.model.CoffeeShopDto;
 import org.jsweet.ionicexercise.client.model.RateCoffeeShopParameters;
-
-import com.sun.jersey.spi.resource.Singleton;
 
 @Path("/coffeeshop")
 @Singleton
