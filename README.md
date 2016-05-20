@@ -24,4 +24,7 @@ JavaScript files are generated in `src/main/webapp/js/app`, and candies are gene
 
 Deploy on a glassfish server and browse context root. Persistence unit configuration is not mandatory since web api use mocks. It is just a template :)
 
+## Troubleshooting
 
+On Glassfish server 4.1.1, some errors could occur on startup with Jersey 2 ([see SO thread](http://stackoverflow.com/questions/33319659/moxy-exceptions-in-javaee-jersey-2-0-project#comment59525913_35925641))
+In order to solve it, download latest EclipseLink and update glassfish/module/...moxy jar
